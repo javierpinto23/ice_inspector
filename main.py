@@ -1,16 +1,20 @@
-# This is a sample Python script.
+import cv2
+from ultralytics import YOLO
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+model = YOLO('yolov8n.pt')
 
+cap = cv2.VideoCapture("/Users/pintojav/Library/CloudStorage/OneDrive-adidas/MASTER_CLASSES_OSCAR-JAIME/CLASS_HOW_ADD_NEW_FIELD_CONNECTOOR_KAFKA.mp4")
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+ret = True
 
+while ret:
+    ret, frame = cap.read()
+    results = model.track(frame, persist=True)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    frame = frame[0].plot()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    cv2.imshow('frame', frame_)
+
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        break
+
